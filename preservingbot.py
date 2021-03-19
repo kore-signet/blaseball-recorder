@@ -31,4 +31,4 @@ async def status(ctx):
     else:
         await ctx.send("i'm not archiving right now!")
 
-bot.run('ODIyNTM0NTg5ODY4MDE1NjQ3.YFTrCA.ez_Z2jEoFpMfNRZ0mzedlpF91iA')
+bot.run('')
