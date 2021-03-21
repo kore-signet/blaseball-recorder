@@ -29,8 +29,14 @@ class Archiver(commands.Bot):
         self.config = {
             'ARCHIVER_PATH': os.environ.get('ARCHIVER_PATH','node/preserve.js'),
             'TOKEN': os.environ.get('TOKEN'),
-            'PREFIX': os.environ.get('DISCORD_PREFIX','eyes:')
+            'PREFIX': os.environ.get('DISCORD_PREFIX','eyes:'),
+            'DEFAULT_TIME_LIMIT': int(os.environ.get('DEFAULT_TIME_LIMIT','20')),
+            'time_limits': {}
         }
+
+        for limit in os.environ.get('TIME_LIMITS','').split(','):
+            split = limit.split(':')
+            self.config['time_limits'][int(split[0])] = int(split[1])
 
         super().__init__(command_prefix=self.config['PREFIX'],help_command=None)
         self.load_extension('clockwork.video')

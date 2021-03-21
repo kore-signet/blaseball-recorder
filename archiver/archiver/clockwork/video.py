@@ -33,6 +33,22 @@ class VideoCog(commands.Cog):
             await ctx.send(embed=embed)
             return
 
+        limits = []
+        limit = None
+        for r in ctx.author.roles:
+            if self.config['time_limits'].get(r.id,None):
+                limits.append(self.config['time_limits'][r.id])
+
+        if limits:
+            limits = sorted(limits)
+            limit = limits[0]
+        else:
+            limit = self.config['DEFAULT_TIME_LIMIT']
+
+        if limit != -1 and minutes > limit:
+            await ctx.send("hey, that amount of recording time is over the time limit >:")
+            return
+
         minutes = 60 * (minutes + 5)
 
         logging.debug("Binding")
