@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  streamer:
+    image: blaseball-recorder/streamer
+    volumes:
+      - ./streams:/stream
+    security_opt:
+      - seccomp=./chrome.json
+    env_file:
+      - recorder.env
+  archiver:
+    image: blaseball-recorder/archiver
+    volumes:
+      - ./streams:/stream
+      - ./archives:/archives
+    env_file:
+      - archiver.env

@@ -1,0 +1,10 @@
+{
+  "name": "archiver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ffmpeg-stream": "^0.7.0",
+    "zeromq": "6.0.0-beta.5"
+  }
+}

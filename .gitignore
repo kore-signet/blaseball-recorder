@@ -118,3 +118,6 @@ dist
 segments/
 *.credentials
 archives/*
+streams/*
+recorder.env
+archiver.env

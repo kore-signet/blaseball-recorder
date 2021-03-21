@@ -2,4 +2,4 @@
 
 ### credits
 - [BlaseballCompact](https://thevdude.github.io/BlaseballCompact/) by thevdude
-- [BIG SCREEN Blaseball](BIG SCREEN Blaseball) by cephus
+- [BIG SCREEN Blaseball](https://holmesmr.github.io/Blaseball-Userstyles/#instructions) by cephus

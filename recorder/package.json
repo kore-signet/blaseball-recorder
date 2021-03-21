@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "run-dev": "LOG_LEVEL=debug PRETTY_LOGS=true node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ffmpeg-stream": "^0.7.0",
+    "pino": "^6.11.2",
+    "puppeteer": "6.0.0"
+  },
+  "devDependencies": {
+    "pino-pretty": "^4.7.1"
+  }
+}
