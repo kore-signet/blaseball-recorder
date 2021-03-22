@@ -13,8 +13,12 @@ class HelpCog(commands.Cog):
     @commands.command()
     async def help(self,ctx, *, command: typing.Optional[str]):
         h = f"""
-    👁️ |        **{ctx.prefix}watch** [minutes to record for]
-    👁️ |        **{ctx.prefix}status** [get current recording status]
+    👁️ |        **{ctx.prefix}watch** [minutes]
+                *-> records a clip of the blaseball site for [minutes]*
+    👁️ |        **{ctx.prefix}status**
+                *-> gets current recording status*
+    👁️ |        **{ctx.prefix}list**
+                *-> lists all archived clips*
         """
 
         about = """
@@ -27,7 +31,9 @@ class HelpCog(commands.Cog):
 class Archiver(commands.Bot):
     def __init__(self,**kwargs):
         self.config = {
-            'ARCHIVER_PATH': os.environ.get('ARCHIVER_PATH','node/preserve.js'),
+            'ARCHIVER_PATH': os.environ.get('ARCHIVER_PATH','/home/streamer/archiver/node/preserve.js'),
+            'ARCHIVES_PATH': os.environ.get('ARCHIVES_PATH','/archives/'),
+            'ARCHIVES_URL': os.environ.get('ARCHIVES_URL'),
             'TOKEN': os.environ.get('TOKEN'),
             'PREFIX': os.environ.get('DISCORD_PREFIX','eyes:'),
             'DEFAULT_TIME_LIMIT': int(os.environ.get('DEFAULT_TIME_LIMIT','20')),

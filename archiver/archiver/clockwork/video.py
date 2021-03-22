@@ -1,13 +1,8 @@
+import humanize, zmq, zmq.asyncio, discord
+import logging, functools, subprocess, typing, os, os.path
+from dateutil.parser import parse as dateparse
 from discord.ext import commands
-import discord
 from datetime import datetime, timedelta
-import subprocess
-import typing
-import zmq
-import zmq.asyncio
-import humanize
-import logging
-import functools
 
 class VideoCog(commands.Cog):
     def __init__(self,config):
@@ -17,6 +12,21 @@ class VideoCog(commands.Cog):
         self.running = False
         self.started_time = None
         self.archiving_until = None
+
+    @commands.command(brief="lists archived clips",
+    help="Lists all archived clips.\n ex: eyes:list")
+    async def list(self,ctx):
+        entries = []
+        logging.debug(self.config)
+        for file in os.listdir(path=self.config['ARCHIVES_PATH']):
+            timestamp, ext = os.path.splitext(file)
+            timestamp = dateparse(timestamp).strftime('%d/%m - %H:%M')
+
+            url = self.config['ARCHIVES_URL'] + file
+            entries.append(f"-> [{timestamp}]({url})")
+
+        embed=discord.Embed(title="Archived clips:", description='\n'.join(entries))
+        await ctx.send(embed=embed)
 
     @commands.command(brief="archives blaseball as video",
     help="Archives blaseball as video.\n ex: eyes:watch 30",
