@@ -17,7 +17,6 @@ class VideoCog(commands.Cog):
     help="Lists all archived clips.\n ex: eyes:list")
     async def list(self,ctx):
         entries = []
-        logging.debug(self.config)
         for file in os.listdir(path=self.config['ARCHIVES_PATH']):
             timestamp, ext = os.path.splitext(file)
             timestamp = dateparse(timestamp).strftime('%d/%m - %H:%M')
