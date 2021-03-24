@@ -41,13 +41,13 @@ function sleep(ms) {
     deviceScaleFactor:1
   })
 
-  // set session cookie
-  logger.debug('Adding authentication info to browser session')
-  page.setCookie(...[{
-    "name": "connect.sid",
-    "value": process.env.BLASEBALL_SESSION,
-    "domain": "www.blaseball.com"
-  }])
+  // // set session cookie
+  // logger.debug('Adding authentication info to browser session')
+  // page.setCookie(...[{
+  //   "name": "connect.sid",
+  //   "value": process.env.BLASEBALL_SESSION,
+  //   "domain": "www.blaseball.com"
+  // }])
 
   // blaseball time
   await page.goto('https://www.blaseball.com/')
@@ -60,34 +60,34 @@ function sleep(ms) {
     await league.click()
   }
 //  add css inserts
-  logger.debug('Adding css inserts')
-  await page.addStyleTag({path:'./css/bigscreen.css'})
-  await page.addStyleTag({path:'./css/compact.css'})
-
-  await page.waitForSelector(".Main-Body")
-  // scroll until every game is in view
-  logger.debug('Scrolling games into view')
-  try {
-    await page.$eval('.GameWidget:last-of-type', e => {
-      e.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
-    })
-  } catch (e) {
-    try {
-
-      await page.$eval('div.PlayoffSetup-MatchupGroup:last-child', e => {
-        e.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
-      })
-    } catch (e) {
-      
-    }
-  }
+  // logger.debug('Adding css inserts')
+  // await page.addStyleTag({path:'./css/bigscreen.css'})
+  // await page.addStyleTag({path:'./css/compact.css'})
+  //
+  // await page.waitForSelector(".Main-Body")
+  // // scroll until every game is in view
+  // logger.debug('Scrolling games into view')
+  // try {
+  //   await page.$eval('.GameWidget:last-of-type', e => {
+  //     e.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
+  //   })
+  // } catch (e) {
+  //   try {
+  //
+  //     await page.$eval('div.PlayoffSetup-MatchupGroup:last-child', e => {
+  //       e.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
+  //     })
+  //   } catch (e) {
+  //
+  //   }
+  // }
 
   const converter = new Converter()
 
   // create JPEG input stream
   const converterInput = converter.createInputStream({
     f: "image2pipe",
-    vcodec: "mjpeg",
+    codec: "mjpeg"
   })
 
   // start screencast from chrome
@@ -109,11 +109,14 @@ function sleep(ms) {
 
   // create output stream
   logger.debug('Creating output stream')
-  converter.createOutputToFile('/stream/blaseball.m3u8', {
-    f: "hls",
-    hls_time: 10,
-    hls_list_size: 40,
-    hls_flags: ["delete_segments"]
+  converter.createOutputToFile('/stream/output%03d.mjpeg', {
+    f: "segment",
+    vcodec: "copy",
+    segment_format: "mjpeg",
+    segment_time: 60,
+    segment_wrap: 7,
+    segment_list: '/stream/blaseball.m3u8',
+    segment_list_flags: 'live'
   })
 
   // run converter

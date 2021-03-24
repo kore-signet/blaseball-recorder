@@ -13,7 +13,7 @@ function sleep(ms) {
 
   const converter = new Converter()
   const converterInput = converter.createInputFromFile('/stream/blaseball.m3u8',{
-    f: "hls",
+    allowed_extensions: 'mjpeg',
     ss: 0,
     live_start_index: 0,
     t: process.argv[2]
@@ -21,8 +21,7 @@ function sleep(ms) {
 
   await sock.send("CREATED INPUT")
 
-  const converterOut = converter.createOutputToFile(path.join('/archives/',new Date().toISOString() + '.mkv'),{
-    f: "matroska",
+  const converterOut = converter.createOutputToFile(path.join('/archives/',new Date().toISOString() + '.mp4'),{
     vcodec: "libx264"
   })
 
